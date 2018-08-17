@@ -1,0 +1,88 @@
+html, body {
+  background-color: #292a2f;
+  color: #c6c7cf;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.App {
+  text-align: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+h1 {
+  color: #44b37d;
+  font-size: 35pt;
+  margin-bottom: 10px;
+  line-height: 0.9em;
+}
+
+h2 {
+  font-weight: bold;
+  color: #3ea171;
+  margin-top: 10px;
+}
+
+h4 {
+  color: white;
+  margin: 5px;
+}
+
+h5 {
+  margin: 10px;
+}
+
+.searchbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 20px;
+}
+
+input {
+  background-color: #18191c;
+  border: 1px solid #0f1012;
+  border-right: none;
+  color: #c6c7cf;
+  border-radius: 3px 0 0 3px;
+  font-size: 13pt;
+  padding-left: 13px;
+  text-align: left;
+  line-height: 20px;
+  height: 35px;
+  width: 330px;
+  transition: ease 0.2s;
+}
+
+input:focus {
+  border: 2px solid #4498b3;
+  transition: ease 0.2s;
+}
+
+button {
+  height: 35px;
+  border-radius: 0 5px 5px 0;
+  border: none;
+  background-color: #4498b3;
+  color: white;
+  font-size: 12pt;
+  transition: ease 0.2s;
+}
+
+button:hover {
+  transition: ease 0.2s;
+}
+
+.main {
+  margin-top: 75px;
+}
+
+.weak {
+  color: #aaa;
+}
+
+img {
+  border-radius: 8px;
+  max-width: 300px;
+  width: 100%;
+}
