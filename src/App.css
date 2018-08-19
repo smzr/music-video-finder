@@ -52,6 +52,7 @@ input {
   height: 35px;
   width: 330px;
   transition: ease 0.2s;
+  outline: none;
 }
 
 input:focus {
@@ -59,7 +60,7 @@ input:focus {
   transition: ease 0.2s;
 }
 
-button {
+.submit {
   height: 35px;
   border-radius: 0 5px 5px 0;
   border: none;
@@ -67,10 +68,32 @@ button {
   color: white;
   font-size: 12pt;
   transition: ease 0.2s;
+  outline: none;
 }
 
-button:hover {
+.submit:hover {
   transition: ease 0.2s;
+}
+
+.spotify-btn {
+  color: #fff;
+  background-color: #1db954;
+  border-color: #1aa34a;
+  transition-property: background-color,border-color,color,box-shadow,filter;
+  transition-duration: .3s;
+  border-width: 0;
+  letter-spacing: 2px;
+  min-width: 160px;
+  text-transform: uppercase;
+  white-space: normal;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 500px;
+  padding: 11px 32px 9px;
+  font-family: 'Noto Sans', sans-serif;
+  margin-top: 20px;
 }
 
 .main {
