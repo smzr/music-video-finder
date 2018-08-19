@@ -1,15 +1,13 @@
-
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import './bootstrap-grid.css'
+import queryString from 'query-string';
 const api = require('./api-keys.json');
 var search = require('youtube-search');
 var opts = {
   maxResults: 1,
   key: api.youtube
 };
-
-
 
 class App extends Component {
   constructor(props) {
@@ -20,13 +18,13 @@ class App extends Component {
       spotify: '',
       songname: '',
       artist: '',
-      albumimg: '',
+      albumimg: 'https://i.imgur.com/bRqwDJc.png',
       link: '',
 
       youtube: '',
       title: '',
       channel: '',
-      thumbnail: '',
+      thumbnail: 'https://i.imgur.com/bRqwDJc.png',
       url: ''
     };
 
@@ -35,15 +33,18 @@ class App extends Component {
     this.getAPIdata = this.getAPIdata.bind(this);
   }
 
-  getInputData(uri){this.setState({inputURI: uri})}
+  getInputData(uri) {
+    this.setState({inputURI: uri})
+  }
 
   getAPIdata(id) {
-    const accessToken = api.spotify;
-    fetch('https://api.spotify.com/v1/tracks/'+ id, {
+    let parsed = queryString.parse(window.location.search);
+    let accessToken = parsed.access_token
+    fetch('https://api.spotify.com/v1/tracks/' + id, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + accessToken,
+        'Authorization': 'Bearer ' + accessToken
       }
     }).then(response => response.json()).then(data => {
       console.log(data)
@@ -53,7 +54,8 @@ class App extends Component {
       this.setState({link: data.external_urls.spotify})
       var self = this;
       search(this.state.songname + ' ' + this.state.artist, opts, function(err, results) {
-        if(err) return console.log(err);
+        if (err)
+          return console.log(err);
         console.log(results[0])
         self.setState({spotify: 'Spotify'})
         self.setState({youtube: 'YouTube'})
@@ -66,61 +68,52 @@ class App extends Component {
   }
 
   handleClick() {
-    this.getAPIdata(this.state.inputURI.replace('spotify:track:',''))
+    this.getAPIdata(this.state.inputURI.replace('spotify:track:', ''))
   }
 
   render() {
-    return (
-      <div className="App">
-        <h1>Music video finder</h1>
-        <h2>Spotify to YouTube</h2>
-        <SongInput callback={this.getInputData} btnpress={this.handleClick}/>
-        <div className="row">
-          <Spotify spotify={this.state.spotify} songname={this.state.songname} artist={this.state.artist} albumimg={this.state.albumimg} link={this.state.link}/>
-          <YouTube youtube={this.state.youtube} title={this.state.title} channel={this.state.channel} thumbnail={this.state.thumbnail} url={this.state.url}/>
-        </div>
+    return (<div className="App">
+      <h1>Music video finder</h1>
+      <h2>Spotify to YouTube</h2>
+      <button className="spotify-btn" onClick={() => window.location = 'http://music-video-finder-backend.herokuapp.com/login'}>Refresh Token</button>
+      <SongInput callback={this.getInputData} btnpress={this.handleClick}/>
+      <div className="row">
+        <Spotify spotify={this.state.spotify} songname={this.state.songname} artist={this.state.artist} albumimg={this.state.albumimg} link={this.state.link}/>
+        <YouTube youtube={this.state.youtube} title={this.state.title} channel={this.state.channel} thumbnail={this.state.thumbnail} url={this.state.url}/>
       </div>
-    );
+    </div>);
   }
 }
 
 class SongInput extends Component {
   render() {
-    return (
-      <div className="searchbar">
-        <input type="text" placeholder="Spotify Track URI" onChange={e => this.props.callback(e.target.value)}/>
-        <button className='button' onClick={this.props.btnpress}>Submit</button>
-      </div>
-    );
+    return (<div className="searchbar">
+      <input type="text" placeholder="Spotify Track URI" onChange={e => this.props.callback(e.target.value)}/>
+      <button className='submit' onClick={this.props.btnpress}>Submit</button>
+    </div>);
   }
 }
 
 class Spotify extends Component {
   render() {
-    return (
-      <div className="col-md-6 col-sm-12 spotify">
-        <p className="weak">{this.props.spotify}</p>
-        <a href={this.props.link}><img src={this.props.albumimg} alt="Spotify Track Cover"/></a>
-        <h4>{this.props.songname}</h4>
-        <h5>{this.props.artist}</h5>
-      </div>
-    );
+    return (<div className="col-md-6 col-sm-12 spotify">
+      <p className="weak">{this.props.spotify}</p>
+      <a href={this.props.link}><img src={this.props.albumimg} alt="Spotify Track Cover"/></a>
+      <h4>{this.props.songname}</h4>
+      <h5>{this.props.artist}</h5>
+    </div>);
   }
 }
 
 class YouTube extends Component {
   render() {
-    return (
-      <div className="col-md-6 col-sm-12 youtube">
-        <p className="weak">{this.props.youtube}</p>
-        <a href={this.props.url}><img src={this.props.thumbnail} alt="YouTube Video Thumbnail"/></a>
-        <h4>{this.props.title}</h4>
-        <h5>{this.props.channel}</h5>
-      </div>
-    );
+    return (<div className="col-md-6 col-sm-12 youtube">
+      <p className="weak">{this.props.youtube}</p>
+      <a href={this.props.url}><img src={this.props.thumbnail} alt="YouTube Video Thumbnail"/></a>
+      <h4>{this.props.title}</h4>
+      <h5>{this.props.channel}</h5>
+    </div>);
   }
 }
-
-
 
 export default App;
